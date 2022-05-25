@@ -1,7 +1,13 @@
 package mx.tecnm.tepic.ladm_u5_mapazonaturistica_overtime
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -9,12 +15,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import mx.tecnm.tepic.ladm_u5_mapazonaturistica_overtime.databinding.ActivityMapsBinding
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    lateinit var locacion : LocationManager
+    private var baseRemota = FirebaseFirestore.getInstance()
+    var posicion = ArrayList<Posicion>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +36,40 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        if(ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),1)
+        }
+
+        baseRemota.collection("feria")
+            .addSnapshotListener { value, error ->
+                if(error != null){
+                    Toast.makeText(this, "Error! No se puede acceder a Firebase", Toast.LENGTH_LONG)
+                        .show()
+                    return@addSnapshotListener
+                }
+                var resultado = ""
+                posicion.clear()
+                for(documento in value!!){
+                    var data = Posicion()
+                    data.nombre = documento.getString("nombre").toString()
+                    data.posicion1 = documento.getGeoPoint("posicion1")!!
+                    data.posicion2 = documento.getGeoPoint("posicion2")!!
+
+                    resultado += data.toString()+"\n\n"
+                    posicion.add(data)
+                }
+                AlertDialog.Builder(this)
+                    .setTitle("Posiciones")
+                    .setMessage(resultado)
+                    .show()
+            }
+
+        locacion = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var Oyente = Oyente(this)
+        locacion.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 01f, Oyente)
     }
 
     /*
@@ -49,8 +93,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val feria = LatLng(21.483098, -104.882286)
+        mMap.addMarker(MarkerOptions().position(feria).title("La feria Tepic"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(feria))
+
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isMyLocationButtonEnabled = true
     }
 }
