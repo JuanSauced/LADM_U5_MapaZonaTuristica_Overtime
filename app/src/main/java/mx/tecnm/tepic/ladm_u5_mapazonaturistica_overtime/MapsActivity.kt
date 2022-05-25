@@ -29,7 +29,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     /*
-    * Equipo Overtime   
+    * Equipo Overtime
     *   Gustavo Marin Lemus
     *   Juan Luis Saucedo García
     *   Benjamin Maximiliano Zepeda Ibarra
