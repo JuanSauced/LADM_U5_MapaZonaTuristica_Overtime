@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "182190261345",
+    "project_id": "mapazonaturisticaovertime",
+    "storage_bucket": "mapazonaturisticaovertime.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182190261345:android:a5e6632a298f4b4f055620",
+        "android_client_info": {
+          "package_name": "mx.tecnm.tepic.ladm_u5_mapazonaturistica_overtime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182190261345-64tc4c83puvq276fe0gc04jkt6heiqqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkA-BDeFoqatbbfI5a78JcgEbQ_hk4fhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182190261345-64tc4c83puvq276fe0gc04jkt6heiqqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182190261345:android:09a43a1f091bda0e055620",
+        "android_client_info": {
+          "package_name": "mx.tecnm.tepic.u5_mapazonaturistica_overtime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182190261345-64tc4c83puvq276fe0gc04jkt6heiqqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkA-BDeFoqatbbfI5a78JcgEbQ_hk4fhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182190261345-64tc4c83puvq276fe0gc04jkt6heiqqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
