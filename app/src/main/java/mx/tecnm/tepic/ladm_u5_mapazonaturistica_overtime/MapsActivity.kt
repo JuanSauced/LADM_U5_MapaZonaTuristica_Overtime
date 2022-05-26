@@ -1,6 +1,7 @@
 package mx.tecnm.tepic.ladm_u5_mapazonaturistica_overtime
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var locacion : LocationManager
     private var baseRemota = FirebaseFirestore.getInstance()
     var posicion = ArrayList<Posicion>()
+    var actual = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,26 +52,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .show()
                     return@addSnapshotListener
                 }
-                var resultado = ""
                 posicion.clear()
                 for(documento in value!!){
                     var data = Posicion()
                     data.nombre = documento.getString("nombre").toString()
                     data.posicion1 = documento.getGeoPoint("posicion1")!!
                     data.posicion2 = documento.getGeoPoint("posicion2")!!
-
-                    resultado += data.toString()+"\n\n"
+                    data.carpeta = documento.getString("carpeta").toString()
+                    data.descripcion = documento.getString("descripcion").toString()
                     posicion.add(data)
                 }
-                AlertDialog.Builder(this)
+                /*AlertDialog.Builder(this)
                     .setTitle("Posiciones")
                     .setMessage(resultado)
-                    .show()
+                    .show()*/
             }
 
         locacion = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         var Oyente = Oyente(this)
         locacion.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 01f, Oyente)
+    }
+
+    fun invocarOtraVentana() {
+        val i = Intent(this, MainActivity::class.java)
+        i.putExtra("Nombre",posicion.get(actual).nombre)
+        i.putExtra("Descripcion",posicion.get(actual).descripcion)
+        i.putExtra("Carpeta",posicion.get(actual).carpeta)
+        startActivity(i)
+        finish()
     }
 
     /*

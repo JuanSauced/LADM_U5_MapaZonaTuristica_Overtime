@@ -4,6 +4,8 @@ import com.google.firebase.firestore.GeoPoint
 
 class Posicion {
     var nombre = ""
+    var carpeta = ""
+    var descripcion = ""
     var posicion1 : GeoPoint = GeoPoint(0.0,0.0)
     var posicion2 : GeoPoint = GeoPoint(0.0,0.0)
 
