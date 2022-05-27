@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">LADM_U5_MapaZonaTuristica_Overtime</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="app_name">Zona Turistica Overtime</string>
+    <string name="title_activity_maps">Overtime</string>
 </resources>
