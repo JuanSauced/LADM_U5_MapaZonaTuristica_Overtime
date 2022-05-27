@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -105,7 +103,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
         val feria = LatLng(21.483098, -104.882286)
         mMap.addMarker(MarkerOptions().position(feria).title("La feria Tepic"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(feria))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+            LatLng(
+                feria.latitude,
+                feria.longitude
+            ), 15.0f
+            ))
 
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMyLocationButtonEnabled = true
